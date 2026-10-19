@@ -1,0 +1,174 @@
+{
+  "account_id": "DE00****0000",
+  "account_holder": "Anna Beispiel",
+  "processing_date": "2026-10-07",
+  "results": [
+    {
+      "id": "E01",
+      "type": "price_change",
+      "provider": [
+        "Vattenfall"
+      ],
+      "amount": 102.0,
+      "previous_amount": 94.0,
+      "date": "2026-12-01",
+      "needs_attention": true,
+      "agent_should_look_up": "Vattenfall is a recurring payment; current amount 94",
+      "why": "Real price increase, effective in future"
+    },
+    {
+      "id": "E02",
+      "type": "price_change",
+      "provider": [
+        "Audible"
+      ],
+      "amount": 9.95,
+      "previous_amount": 0,
+      "date": "2026-10-15",
+      "needs_attention": true,
+      "agent_should_look_up": "Audible not yet a recurring payment",
+      "why": "Trial ends, first charge coming"
+    },
+    {
+      "id": "E03",
+      "type": "upcoming_bill",
+      "provider": [
+        "Telekom",
+        "Deutsche Telekom"
+      ],
+      "amount": 39.95,
+      "date": "2026-11-03",
+      "needs_attention": false,
+      "agent_should_look_up": "Telekom usual amount 39.95, same",
+      "why": "Normal bill, direct debit, usual amount: list only, no card"
+    },
+    {
+      "id": "E04",
+      "type": [
+        "upcoming_bill",
+        "pending_payment"
+      ],
+      "provider": [
+        "Hausverwaltung Meier"
+      ],
+      "amount": 186.4,
+      "date": "2026-11-05",
+      "needs_attention": true,
+      "agent_should_look_up": "Rent payee is recurring at 850; this is a separate one-off amount",
+      "why": "Transfer needed and unusual amount. Both types fit the prompt's definitions (a bill, and a request to transfer), so either passes; needs_attention must be true."
+    },
+    {
+      "id": "E05",
+      "type": "pending_payment",
+      "provider": [
+        "Grundschule am Park"
+      ],
+      "amount": 180.0,
+      "date": "2026-10-14",
+      "needs_attention": true,
+      "agent_should_look_up": "none needed",
+      "why": "User must transfer before due date"
+    },
+    {
+      "id": "E06",
+      "type": "pending_payment",
+      "provider": [
+        "Yoga Studio Lindener Hof"
+      ],
+      "amount": 45.0,
+      "date": "2026-10-17",
+      "needs_attention": true,
+      "agent_should_look_up": "none needed",
+      "why": "Registration waiting for payment"
+    },
+    {
+      "id": "E07",
+      "type": "travel_booking",
+      "provider": [
+        "Lufthansa"
+      ],
+      "is_for_user": true,
+      "travel_start": "2026-11-20",
+      "travel_end": "2026-12-08",
+      "needs_attention": true,
+      "agent_should_look_up": "Subscriptions overlapping the trip: FitX 24.99, Deutschlandticket 63.00, streaming",
+      "why": "18-day trip for the account holder; suggest pausing gym and transport pass (may be possible)"
+    },
+    {
+      "id": "E08",
+      "type": "ignore",
+      "provider": [
+        "Lufthansa"
+      ],
+      "is_for_user": false,
+      "agent_should_look_up": "account holder name",
+      "why": "Booking is for another person (Max Mustermann)"
+    },
+    {
+      "id": "E09",
+      "type": "ignore",
+      "provider": [
+        "StromVergleich24"
+      ],
+      "agent_should_look_up": "none (no lookup expected)",
+      "why": "Marketing, not a real change"
+    },
+    {
+      "id": "E10",
+      "type": [
+        "ignore",
+        "uncertain"
+      ],
+      "category": [
+        "fitness"
+      ],
+      "provider": [
+        "FitX"
+      ],
+      "amount": 24.99,
+      "date": "2026-09-30",
+      "needs_attention": [
+        false,
+        true
+      ],
+      "agent_should_look_up": "transactions (FitX payments, returned debits) and signals (FitX recurring 24.99)",
+      "why": "Genuinely borderline: the bank shows FitX paid Aug-Oct with no returned debit, so ignore (settled) and uncertain (flag the contradiction) are both acceptable. Haiku runs on 10 Oct: uncertain, ignore, uncertain; facts identical every run. Fail only if the type is pending_payment or the suggestion tells the user to pay.",
+      "must_not": "pending_payment (asking the user to pay a fee the bank shows was collected)"
+    },
+    {
+      "id": "E11",
+      "type": "price_change",
+      "category": [
+        "energy"
+      ],
+      "provider": [
+        "Vattenfall"
+      ],
+      "amount": 120.0,
+      "previous_amount": 94.0,
+      "date": "2026-12-01",
+      "needs_attention": true,
+      "agent_should_look_up": "REQUIRED: signals (Vattenfall recurring 94). The email never mentions the old amount or the word increase.",
+      "why": "Neutral notice with only the new amount; the agent must find 94 in the data to recognise a +26/month increase"
+    },
+    {
+      "id": "E12",
+      "type": [
+        "price_change",
+        "uncertain"
+      ],
+      "category": [
+        "energy"
+      ],
+      "provider": [
+        "Vattenfall"
+      ],
+      "amount": 125.0,
+      "previous_amount": 94.0,
+      "date": "2026-11-01",
+      "needs_attention": true,
+      "agent_should_look_up": "REQUIRED: signals (Vattenfall recurring 94).",
+      "why": "Subject says December, body says 01.11.2026. Convention (decided 12 Oct): the body's specific date wins over the subject line. Pass: price_change or uncertain, amount 125, previous 94, needs_attention true. Mentioning the conflict is nice to have, not required."
+    }
+  ]
+}

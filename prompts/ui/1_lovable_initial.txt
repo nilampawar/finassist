@@ -1,0 +1,82 @@
+Build a mobile app called "FinAssist" – an AI money assistant for people in Germany. English UI text. It READS data from Supabase and only ADDS feedback rows. It never moves money.
+
+=== LOOK & FEEL (fresh, friendly, trustworthy – like N26 / Revolut light) ===
+- Mobile-first, ~390px wide; on wide screens show the app centred in a phone-width column.
+- Bottom tab bar with icons. Installable PWA (manifest, name "FinAssist", simple app icon in teal).
+- Colours: primary teal #0D9488, light mint background #F0FDFA, white cards, text slate #0F172A, secondary text #64748B.
+  Amber #F59E0B = needs attention. Red #EF4444 ONLY for overdue. Green #10B981 = savings / done.
+- Font: Inter (or similar). Rounded corners (16px cards, full-round chips), soft shadows, generous spacing.
+- Icons: lucide-react. Charts: recharts. Subtle animations (cards fade/slide in, savings ring fills).
+- Illustrations: simple flat illustrations in the teal palette (unDraw style) on the welcome screen and empty states. No photos.
+- Category colour + icon (pastel chip, used on every card):
+  energy ⚡ amber · telecom 📶 sky · rent 🏠 stone · insurance 🛡 indigo · streaming 🎬 purple · music 🎵 pink ·
+  fitness 💪 green · transport 🚆 blue · education 🎓 cyan · memberships 🪪 teal · apps 📱 violet ·
+  news_media 📰 slate · donations 💚 emerald · travel ✈️ orange · broadcasting_fee 📺 rose · shopping 🛍 fuchsia ·
+  anything else: grey with a tag icon.
+
+=== DATA (Supabase) ===
+Use supabase-js directly with these constants. Do NOT use the Lovable Supabase integration, do NOT create tables, migrations, edge functions or auth.
+URL: https://YOUR_PROJECT_REF.supabase.co
+Publishable key: <PASTE_PUBLISHABLE_KEY>
+
+Tables (read):
+- app_users: id, display_name, persona, data_sources ('bank+gmail' or 'bank')
+- accounts: account_id, label, user_id
+- signals: id, account_id, signal_type, normalised_payee, category, amount, previous_amount, monthly_impact, confidence, status, detected_at,
+  details (JSON, optional keys: suggestion, due_date, travel_start, travel_end, needs_attention, source, voucher_amount)
+  Always filter status <> 'withdrawn'.
+- actions (0 or 1 per signal, join on actions.signal_id = signals.id): id, signal_id, headline,
+  options (JSON array [{key, label, why}]), recommended (an option key or null),
+  drafts (JSON array [{option, to, subject, body}] – German emails), links (JSON array [{label, url, why}]),
+  money (JSON with optional numbers, e.g. extra_per_year, saving_per_year_if_cheapest_cancelled, trip_pause_saving_up_to, voucher_extra_value, amount_at_stake, deadline)
+Table (insert only): feedback: account_id, signal_id, action_id, element, value.
+  element is one of: card, option, draft_email. value is one of: helpful, not_helpful, done, not_relevant, or "chose:<option key>".
+  IMPORTANT: insert without .select() (the app is not allowed to read feedback back). Show a small toast "Thanks!" after each insert.
+  Remember on this device (localStorage) which cards were marked done / not relevant, to show their state.
+
+=== SCREENS ===
+1) Welcome: illustration, "FinAssist", "Your money, explained before it moves", then "Choose a demo person":
+   one avatar card per app_users row (initials avatar in a pastel colour, name, persona, small badge "Bank + Gmail" or "Bank only").
+   No password. Tapping a person opens the app for that person's account (accounts.user_id = app_users.id).
+   The header of the app shows the person's avatar; tapping it returns to this picker.
+
+2) Tab "Attention" (default, badge with count):
+   Cards for signals where details.needs_attention = true OR signal_type in
+   (price_increase, duplicate_subscription, unknown_debit, irregular_large_debit, spending_increase, needs_check, refund_offer).
+   - Top: SAVINGS HERO – "You could save up to X € / year" with a progress ring.
+     Potential saving of a card = first non-null of money.saving_per_year_if_cheapest_cancelled, money.extra_per_year,
+     money.trip_pause_saving_up_to, money.voucher_extra_value. X = sum over cards. The ring fills with the share of cards marked done.
+     If X is 0, show "No savings found yet" instead.
+   - COMPACT CARDS (small, ~80px high, list-style): category chip icon on the left; payee + short type label;
+     one line of text (actions.headline if an action exists, else details.suggestion, truncated to 1 line);
+     on the right the amount, and a small green "save X €/yr" pill if there is a potential saving.
+     Small amber dot = needs attention; red "Overdue" pill if details.source = 'email' and details.due_date is before today
+     and signal_type is pending_payment or upcoming_bill. Done cards are greyed out with a green check and move to the bottom.
+   - Sort: overdue first, then by due date (soonest), then by amount.
+   - Empty state: illustration + "Nothing needs your attention 🎉".
+
+3) Card detail (bottom sheet when a card is tapped):
+   - Header: category chip, payee, amount; if previous_amount: "was X €" plus a small before/after bar chart and the difference.
+   - Dates if present (due date, or travel start–end).
+   - If an action exists: headline in bold; then the options as selectable cards (label + why); the recommended one has a teal "Suggested" badge.
+     Tapping "Choose this" inserts feedback element='option', value='chose:<key>'.
+   - Drafts: for each draft, a collapsible "Email draft (German)" box with To, Subject, Body, a "Copy" button,
+     and if "to" contains "@" an "Open in mail" button (mailto link with subject and body). Thumbs up/down under each draft -> element='draft_email'.
+   - Links: list of buttons (label + why), open in a new tab, with an external-link icon.
+   - If no action exists yet: show details.suggestion and "Your assistant is preparing options…".
+   - Footer row: 👍 Helpful / 👎 Not helpful (element='card'), "Mark as done" (value='done'), "Not relevant" (value='not_relevant').
+
+4) Tab "Upcoming": signals of type upcoming_bill, pending_payment, price_change, travel_booking, refund_offer,
+   as a timeline grouped by month (date bubble on the left, payee, type label, amount). Trips show a ✈️ and the date range.
+
+5) Tab "Recurring":
+   - Big number: total regular payments per month (sum of recurring_payment amounts).
+   - Donut chart of that total by category (category colours), legend below.
+   - List of recurring_payment signals (category icon, payee, monthly amount), grouped by category.
+   - Small "Income" section with regular_income signals (payee, amount).
+
+Type labels: price_change "Price change", price_increase "Price increase", upcoming_bill "Upcoming bill", pending_payment "Payment due",
+travel_booking "Trip", refund_offer "Refund", needs_check "Please check", duplicate_subscription "Possible duplicate",
+unknown_debit "Unknown payment", irregular_large_debit "Large payment", spending_increase "Spending up".
+Format money as "102,00 €" and dates as "1 Dec 2026". Never show "null" or "undefined" – leave missing values out.
+Small footer on every tab: "Suggestions only – FinAssist never moves money."

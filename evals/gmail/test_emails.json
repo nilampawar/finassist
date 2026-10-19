@@ -1,0 +1,86 @@
+[
+  {
+    "id": "E01",
+    "from": "Vattenfall Europe Sales GmbH <kundenservice@vattenfall.example>",
+    "date": "2026-10-05",
+    "subject": "Anpassung Ihres monatlichen Abschlags ab 01.12.2026",
+    "body": "Sehr geehrte Frau Beispiel,\n\naufgrund gestiegener Beschaffungskosten passen wir Ihren monatlichen Abschlag für Strom an. Ab dem 01.12.2026 beträgt Ihr Abschlag 102,00 EUR statt bisher 94,00 EUR. Der Betrag wird wie gewohnt per Lastschrift eingezogen.\n\nIhnen steht ein Sonderkündigungsrecht zu.\n\nMit freundlichen Grüßen\nIhr Vattenfall Kundenservice"
+  },
+  {
+    "id": "E02",
+    "from": "Audible <noreply@audible.example>",
+    "date": "2026-10-06",
+    "subject": "Dein Probemonat endet bald",
+    "body": "Hallo Anna,\n\ndein kostenloser Probemonat bei Audible endet am 15.10.2026. Danach kostet dein Abo 9,95 EUR pro Monat. Die erste Zahlung wird am 15.10.2026 von deinem Konto abgebucht.\n\nViel Spaß beim Hören!\nDein Audible Team"
+  },
+  {
+    "id": "E03",
+    "from": "Telekom Deutschland GmbH <rechnung@telekom.example>",
+    "date": "2026-10-04",
+    "subject": "Ihre Mobilfunk-Rechnung Oktober 2026",
+    "body": "Guten Tag Anna Beispiel,\n\nIhre Rechnung für Oktober 2026 ist da. Rechnungsbetrag: 39,95 EUR. Der Betrag wird am 03.11.2026 per Lastschrift von Ihrem Konto abgebucht. Sie müssen nichts weiter tun.\n\nIhre Telekom"
+  },
+  {
+    "id": "E04",
+    "from": "Hausverwaltung Meier GmbH <buchhaltung@meier-hv.example>",
+    "date": "2026-10-06",
+    "subject": "Nebenkostenabrechnung 2025 – Nachzahlung",
+    "body": "Sehr geehrte Frau Beispiel,\n\nanbei erhalten Sie die Nebenkostenabrechnung für das Jahr 2025. Es ergibt sich eine Nachzahlung in Höhe von 186,40 EUR. Bitte überweisen Sie den Betrag bis zum 05.11.2026 auf das bekannte Konto (Verwendungszweck: NK 2025 Whg 3.OG).\n\nMit freundlichen Grüßen\nHausverwaltung Meier"
+  },
+  {
+    "id": "E05",
+    "from": "Grundschule am Park <sekretariat@gs-park.example>",
+    "date": "2026-10-07",
+    "subject": "Klassenfahrt Klasse 3b – Kostenbeitrag",
+    "body": "Liebe Eltern,\n\nfür die Klassenfahrt der Klasse 3b nach Bad Harzburg bitten wir um einen Kostenbeitrag von 180,00 EUR pro Kind. Bitte überweisen Sie den Betrag bis spätestens Mittwoch, 14.10.2026, auf das Klassenkonto.\n\nVielen Dank!\nDas Sekretariat"
+  },
+  {
+    "id": "E06",
+    "from": "Yoga Studio Lindener Hof <info@yoga-linden.example>",
+    "date": "2026-10-05",
+    "subject": "Deine Anmeldung: Herbst-Workshop – Zahlung ausstehend",
+    "body": "Hallo Anna,\n\ndanke für deine Anmeldung zum Herbst-Workshop am 24.10.2026. Dein Platz ist reserviert, sobald die Teilnahmegebühr von 45,00 EUR eingegangen ist. Bitte zahle bis zum 17.10.2026.\n\nNamaste\nDein Yoga Studio"
+  },
+  {
+    "id": "E07",
+    "from": "Lufthansa <buchung@lufthansa.example>",
+    "date": "2026-10-03",
+    "subject": "Ihre Buchungsbestätigung – Hannover nach Lissabon",
+    "body": "Buchungsbestätigung\n\nPassagier: Anna Beispiel\nHinflug: 20.11.2026, Hannover (HAJ) – Lissabon (LIS)\nRückflug: 08.12.2026, Lissabon (LIS) – Hannover (HAJ)\nGesamtpreis: 312,40 EUR (bereits bezahlt)\n\nGute Reise!\nIhre Lufthansa"
+  },
+  {
+    "id": "E08",
+    "from": "Lufthansa <buchung@lufthansa.example>",
+    "date": "2026-10-03",
+    "subject": "Ihre Buchungsbestätigung – Hannover nach Rom",
+    "body": "Buchungsbestätigung\n\nPassagier: Max Mustermann\nHinflug: 02.11.2026, Hannover (HAJ) – Rom (FCO)\nRückflug: 23.11.2026, Rom (FCO) – Hannover (HAJ)\nGesamtpreis: 289,00 EUR (bereits bezahlt)\n\nGute Reise!\nIhre Lufthansa"
+  },
+  {
+    "id": "E09",
+    "from": "StromVergleich24 <news@stromvergleich24.example>",
+    "date": "2026-10-06",
+    "subject": "Achtung: Strompreise steigen! Jetzt wechseln und 300 EUR sparen",
+    "body": "Hallo,\n\nviele Anbieter erhöhen ab Dezember ihre Preise. Vergleichen Sie jetzt und sichern Sie sich bis zu 300 EUR Neukundenbonus!\n\nJetzt vergleichen >>\n\nIhr StromVergleich24-Team"
+  },
+  {
+    "id": "E10",
+    "from": "FitX Deutschland GmbH <service@fitx.example>",
+    "date": "2026-10-02",
+    "subject": "Zahlungserinnerung: offener Betrag",
+    "body": "Hallo Anna,\n\nleider konnten wir deinen Mitgliedsbeitrag in Höhe von 24,99 EUR nicht einziehen. Bitte überweise den Betrag bis zum 30.09.2026.\n\nDein FitX Team"
+  },
+  {
+    "id": "E11",
+    "from": "Vattenfall Europe Sales GmbH <kundenservice@vattenfall.example>",
+    "date": "2026-10-08",
+    "subject": "Ihr neuer Abschlagsplan ab Dezember 2026",
+    "body": "Sehr geehrte Frau Beispiel,\n\nanbei erhalten Sie Ihren neuen Abschlagsplan für Strom (Vertragskonto 4471).\n\nAb dem 01.12.2026 buchen wir monatlich 120,00 EUR per Lastschrift von Ihrem Konto ab.\n\nMit freundlichen Grüßen\nIhr Vattenfall Kundenservice"
+  },
+  {
+    "id": "E12",
+    "from": "Vattenfall Europe Sales GmbH <kundenservice@vattenfall.example>",
+    "date": "2026-10-09",
+    "subject": "Ihr neuer Abschlagsplan ab Dezember 2026",
+    "body": "Sehr geehrte Frau Beispiel,\n\nanbei erhalten Sie Ihren neuen Abschlagsplan für Strom (Vertragskonto 4471).\n\nAb dem 01.11.2026 buchen wir monatlich 125,00 EUR per Lastschrift von Ihrem Konto ab.\n\nMit freundlichen Grüßen\nIhr Vattenfall Kundenservice"
+  }
+]

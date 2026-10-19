@@ -1,0 +1,198 @@
+{
+  "file": "Kontoauszug_2026-08_Musterbank.pdf",
+  "is_statement": true,
+  "account_id": "DE00****0000",
+  "period_start": "2026-08-01",
+  "period_end": "2026-08-31",
+  "opening_balance": 1820.45,
+  "closing_balance": 2920.61,
+  "transaction_count": 15,
+  "transactions": [
+    {
+      "date": "2026-08-01",
+      "payee": "Hausverwaltung Meier GmbH",
+      "amount": -850.0,
+      "accepted_normalised_payee": [
+        "Hausverwaltung Meier"
+      ],
+      "accepted_category": [
+        "rent"
+      ],
+      "is_reversal": false
+    },
+    {
+      "date": "2026-08-02",
+      "payee": "Vattenfall Europe Sales GmbH",
+      "amount": -78.0,
+      "accepted_normalised_payee": [
+        "Vattenfall"
+      ],
+      "accepted_category": [
+        "energy"
+      ],
+      "is_reversal": false
+    },
+    {
+      "date": "2026-08-03",
+      "payee": "Telekom Deutschland GmbH",
+      "amount": -39.95,
+      "accepted_normalised_payee": [
+        "Telekom",
+        "Deutsche Telekom"
+      ],
+      "accepted_category": [
+        "telecom"
+      ],
+      "is_reversal": false
+    },
+    {
+      "date": "2026-08-04",
+      "payee": "Netflix International B.V.",
+      "amount": -13.99,
+      "accepted_normalised_payee": [
+        "Netflix"
+      ],
+      "accepted_category": [
+        "streaming"
+      ],
+      "is_reversal": false
+    },
+    {
+      "date": "2026-08-05",
+      "payee": "Spotify AB",
+      "amount": -10.99,
+      "accepted_normalised_payee": [
+        "Spotify"
+      ],
+      "accepted_category": [
+        "music"
+      ],
+      "is_reversal": false
+    },
+    {
+      "date": "2026-08-06",
+      "payee": "Disney Plus",
+      "amount": -9.99,
+      "accepted_normalised_payee": [
+        "Disney+",
+        "Disney Plus"
+      ],
+      "accepted_category": [
+        "streaming"
+      ],
+      "is_reversal": false
+    },
+    {
+      "date": "2026-08-07",
+      "payee": "FitX Deutschland GmbH",
+      "amount": -24.99,
+      "accepted_normalised_payee": [
+        "FitX"
+      ],
+      "accepted_category": [
+        "fitness"
+      ],
+      "is_reversal": false
+    },
+    {
+      "date": "2026-08-08",
+      "payee": "REWE Markt Hannover",
+      "amount": -56.3,
+      "accepted_normalised_payee": [
+        "REWE"
+      ],
+      "accepted_category": [
+        "groceries"
+      ],
+      "is_reversal": false
+    },
+    {
+      "date": "2026-08-10",
+      "payee": "DB Vertrieb GmbH",
+      "amount": -63.0,
+      "accepted_normalised_payee": [
+        "Deutsche Bahn",
+        "DB"
+      ],
+      "accepted_category": [
+        "transport"
+      ],
+      "is_reversal": false
+    },
+    {
+      "date": "2026-08-12",
+      "payee": "Lidl Dienstleistung",
+      "amount": -50.15,
+      "accepted_normalised_payee": [
+        "Lidl"
+      ],
+      "accepted_category": [
+        "groceries"
+      ],
+      "is_reversal": false
+    },
+    {
+      "date": "2026-08-15",
+      "payee": "dm-drogerie markt",
+      "amount": -18.4,
+      "accepted_normalised_payee": [
+        "dm",
+        "dm-drogerie markt"
+      ],
+      "accepted_category": [
+        "drugstore"
+      ],
+      "is_reversal": false
+    },
+    {
+      "date": "2026-08-15",
+      "payee": "ARD ZDF Deutschlandradio Beitragsservice",
+      "amount": -55.08,
+      "accepted_normalised_payee": [
+        "Beitragsservice",
+        "ARD ZDF Beitragsservice",
+        "ARD ZDF Deutschlandradio Beitragsservice"
+      ],
+      "accepted_category": [
+        "broadcasting_fee"
+      ],
+      "is_reversal": false
+    },
+    {
+      "date": "2026-08-18",
+      "payee": "REWE Markt Hannover",
+      "amount": -51.2,
+      "accepted_normalised_payee": [
+        "REWE"
+      ],
+      "accepted_category": [
+        "groceries"
+      ],
+      "is_reversal": false
+    },
+    {
+      "date": "2026-08-22",
+      "payee": "Lieferando",
+      "amount": -27.8,
+      "accepted_normalised_payee": [
+        "Lieferando"
+      ],
+      "accepted_category": [
+        "food_delivery"
+      ],
+      "is_reversal": false
+    },
+    {
+      "date": "2026-08-28",
+      "payee": "Muster Technologies GmbH",
+      "amount": 2450.0,
+      "accepted_normalised_payee": [
+        "Muster Technologies"
+      ],
+      "accepted_category": [
+        "salary"
+      ],
+      "is_reversal": false
+    }
+  ]
+}

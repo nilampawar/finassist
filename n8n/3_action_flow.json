@@ -1,0 +1,231 @@
+{
+  "name": "ActionFlow",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -400,
+        -32
+      ],
+      "id": "ce2af2dd-dc8e-4568-abb4-98fc8e97b776",
+      "name": "Trigger – Every 5 minutes"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const card = { ...$json };\ndelete card.detected_at;\n\nconst system = `You help a person in Germany act on ONE money signal from their banking app. You receive the facts as JSON. Your job: research, decide the sensible options, recommend one, and prepare what they need to act.\n\nResearch: use web search when it helps the person act (the provider's official cancellation or contact page, current comparison offers, who is behind an unknown payment). At most 3 searches. Prefer official provider websites and well-known German comparison sites.\n\nRules:\n- Money: start from the numbers given in \"money\" and the signal. If an option needs another number (e.g. yearly saving of cancelling one subscription, saving during a trip), calculate it with the code_execution tool – never in your head. Show each option's number in its \"why\"..\n- Dates: today's date is given in the message. Before writing, check what each date means:\n- Bank-statement signals (no details.source = \"email\") describe money that already moved. Their date is when it happened, never a deadline.\n- Email signals with a date before today: the date has passed. If money is still owed, it is overdue: say so, and suggest paying soon and asking about any reminder fee (Mahngebühr). For other types, say what the passed date means (e.g. the refund choice window may have closed).\n- Email signals with a date today or later: this is a real deadline.\n- Never claim facts you were not given (e.g. how often they use a service).\n- Links: ONLY URLs that appeared in your own search results now. Max 3. If nothing reliable was found, return an empty list.\n- Options: 2–4 realistic choices; \"keep\" is always a valid choice. Never pressure, never act for the person.\n- Drafts: German, polite, ready to send; use [Kundennummer] or [Vertragsnummer] as placeholders; sign with the first name only. \"to\" = the provider's customer-service or cancellation email address – search for it, and use it only if it appears in a search result you cite. Never use legal-notice (Impressum), privacy or press addresses. If you find none, use the provider's name.\n- Signal hints: price_increase/price_change → keep / compare offers / ask the provider for a better rate / cancel (energy price increases usually come with a special right to cancel, \"Sonderkündigungsrecht\"). duplicate_subscription → keep both / cancel one. unknown_debit → check what it is / ask the company / ask the bank to return a direct debit (SEPA: possible within 8 weeks). travel_booking → pause only what is useless abroad (gym, local transport; streaming usually works within the EU). refund_offer → refund to account vs voucher, with one draft for each. pending_payment → pay / ask a question.\n- headline: one short English sentence naming the decision.\n\nAnswer with ONLY one JSON object, no other text:\n{\"headline\": \"\", \"options\": [{\"key\": \"\", \"label\": \"\", \"why\": \"\"}], \"recommended\": \"\", \"drafts\": [{\"option\": \"\", \"to\": \"\", \"subject\": \"\", \"body\": \"\"}], \"links\": [{\"label\": \"\", \"url\": \"\", \"why\": \"\"}]}`;\n\nreturn { json: {\n  signal_id: card.signal_id,\n  account_id: card.account_id,\n  request: {\n    model: \"claude-haiku-5-5\",\n    max_tokens: 6000,\n    system,\n    tools: [\n      { type: \"web_search_20260209\", name: \"web_search\", max_uses: 3,\n        user_location: { type: \"approximate\", country: \"DE\", city: \"Hannover\", timezone: \"Europe/Berlin\" } },\n      { type: \"code_execution_20260521\", name: \"code_execution\" }\n    ],\n    messages: [{ role: \"user\", content: \"Today: \" + new Date().toISOString().slice(0, 10) + \"\\nSignal facts:\\n\" + JSON.stringify(card, null, 2) }]\n  }\n}};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        48,
+        -32
+      ],
+      "id": "7f19a10e-f475-4d9d-95fa-3b4d86bcd395",
+      "name": "Prepare – Instructions for action agent"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const res = $json;\nconst blocks = res.content || [];\nconst card = $('Get – Cards needing actions').item.json;\nconst prep = $('Prepare – Instructions for action agent').item.json;\n\n// 1) Every URL the agent really got back from web search (results + citations)\nconst found = new Set();\nconst norm = u => String(u || \"\").trim().replace(/[#?].*$/, \"\").replace(/\\/+$/, \"\").toLowerCase();\nlet calcCalls = 0;\nfor (const b of blocks) {\n  if (b.type === \"web_search_tool_result\" && Array.isArray(b.content)) {\n    for (const r of b.content) if (r.url) found.add(norm(r.url));\n  }\n  if (b.type === \"server_tool_use\" && b.name === \"code_execution\") calcCalls++;\n  for (const c of (b.citations || [])) if (c.url) found.add(norm(c.url));\n}\n\n// 2) Read the final JSON answer (tolerant reader)\nlet text = blocks.filter(b => b.type === \"text\").map(b => b.text).join(\"\\n\").trim()\n  .replace(/^```(?:json)?/i, \"\").replace(/```$/, \"\").trim();\nconst start = text.indexOf(\"{\");\nlet parsed = null;\nif (start >= 0) {\n  for (let end = text.lastIndexOf(\"}\"); end > start; end = text.lastIndexOf(\"}\", end - 1)) {\n    try { parsed = JSON.parse(text.slice(start, end + 1)); break; } catch (e) {}\n  }\n}\nif (!parsed) parsed = { headline: null, options: [], recommended: null, drafts: [], links: [], unreadable: true };\n\n// 3) Links: keep only URLs the agent actually found\nconst proposed = Array.isArray(parsed.links) ? parsed.links : [];\nparsed.links = proposed.filter(l => found.has(norm(l.url)));\n\n// 4) Drafts: keep an email address only if it appears in text the agent cited; block wrong kinds\nconst citedText = blocks.flatMap(b => (b.citations || []).map(c => String(c.cited_text || \"\")))\n  .join(\" \").toLowerCase();\nconst blocked = /^(impressum|datenschutz|privacy|legal|press|presse)@/i;\nparsed.drafts = (parsed.drafts || []).map(d => {\n  const to = String(d.to || \"\").trim();\n  if (!/@/.test(to)) return d;\n  const ok = citedText.includes(to.toLowerCase()) && !blocked.test(to);\n  return { ...d, to: ok ? to : (card.provider || \"the provider\"), to_verified: ok };\n});\n\nreturn { json: {\n  signal_id: prep.signal_id,\n  account_id: prep.account_id,\n  result: parsed,\n  money: card.money,\n  meta: {\n    model: res.model,\n    searches: res.usage?.server_tool_use?.web_search_requests ?? 0,\n    calculator_calls: calcCalls,\n    links_proposed: proposed.length,\n    links_dropped: proposed.length - parsed.links.length\n  }\n}};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        496,
+        -32
+      ],
+      "id": "29e69445-5aa5-47f4-aaf0-676a37ff3c1e",
+      "name": "Rules – Read answer and verify links"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://YOUR_PROJECT_REF.supabase.co/rest/v1/rpc/get_signals_for_actions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{ \"p_limit\": 7 }",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        -176,
+        -32
+      ],
+      "id": "2512171d-e82f-4ecd-9021-c027cde0688b",
+      "name": "Get – Cards needing actions",
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "anthropicApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            },
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.request) }}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        272,
+        -32
+      ],
+      "id": "b5ec87fd-fa6e-460a-9c94-ea8bbd0920f8",
+      "name": "AI – Agent researches and prepares action",
+      "credentials": {
+        "anthropicApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "This agents uses web search for links in cards and calculator for calulations",
+        "height": 80,
+        "width": 224
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        208,
+        144
+      ],
+      "typeVersion": 1,
+      "id": "ae1760c8-9085-49fd-8c24-0860a905fc4b",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://YOUR_PROJECT_REF.supabase.co/rest/v1/rpc/save_action",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"p_signal\":  \"{{ $json.signal_id }}\",\n  \"p_account\": \"{{ $json.account_id }}\",\n  \"p_result\":  {{ JSON.stringify($json.result) }},\n  \"p_money\":   {{ JSON.stringify($json.money) }},\n  \"p_meta\":    {{ JSON.stringify($json.meta) }}\n}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        720,
+        -32
+      ],
+      "id": "9e1af4e7-99e3-4752-aaab-206dc5c7cf8e",
+      "name": "Save – Store action",
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Trigger – Every 5 minutes": {
+      "main": [
+        [
+          {
+            "node": "Get – Cards needing actions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare – Instructions for action agent": {
+      "main": [
+        [
+          {
+            "node": "AI – Agent researches and prepares action",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get – Cards needing actions": {
+      "main": [
+        [
+          {
+            "node": "Prepare – Instructions for action agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI – Agent researches and prepares action": {
+      "main": [
+        [
+          {
+            "node": "Rules – Read answer and verify links",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rules – Read answer and verify links": {
+      "main": [
+        [
+          {
+            "node": "Save – Store action",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "nodeGroups": [],
+  "tags": []
+}

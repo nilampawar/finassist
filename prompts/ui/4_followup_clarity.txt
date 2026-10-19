@@ -1,0 +1,40 @@
+Make the Attention tab self-explanatory and less crowded. Keep the current look, data access, detail sheets, stacked cards and feedback as they are. Everything below is calculated from the data – never hard-code names, numbers or dates.
+
+1) EXPLAIN THE SCREEN
+   - Directly under the app header, add one small grey line:
+     "Things I found in your bank statements and emails that may need you."
+   - At the end of that line, a small ⓘ icon. Tapping it opens a small bottom sheet "How FinAssist works" with:
+     • 🏦 Bank statements and ✉️ emails are checked for things that affect your money.
+     • 🔴 Overdue – a payment date has passed and it may still be open.
+     • 🟠 This week – needs you in the next 7 days.
+     • 🟢 Coming up – later, no rush.
+     • ⚪ Good to know – already happened; worth a quick check.
+     • Tap any card to see options, a ready-to-send email draft and useful links.
+     • "Suggestions only – FinAssist never moves money."
+     Use tap (not hover) – this is a phone app.
+
+2) TOP BRIEFING CARD – full sentences, still counts only, still exactly 2 lines and fixed height
+   (o = Overdue cards, w = This week cards, r = Coming up + Good to know cards; a stacked card counts as 1)
+   - o > 0 and w > 0:  "{o} payment(s) overdue, {w} need(s) you this week"   / "{r} more can wait"
+   - o > 0 and w = 0:  "{o} payment(s) overdue"                              / "{r} more can wait"
+   - o = 0 and w > 0:  "{w} thing(s) need you this week"                     / "{r} more can wait"
+   - o = 0 and w = 0 and r > 0: "Nothing urgent this week 🌿"                 / "{r} things to look at when you have time"
+   - no cards: "All clear 🌿" (hide line 2)
+   Use correct singular/plural ("1 payment is overdue", "2 payments are overdue", "1 thing needs you", "3 things need you"). Hide line 2 if r = 0.
+   Keep the tint rules (red if overdue, amber if this week, mint otherwise) and the illustration.
+
+3) SHOW LESS AT FIRST (progressive disclosure)
+   - "Overdue" and "This week" groups are open.
+   - "Coming up" and "Good to know" start COLLAPSED as one slim row each: "● Coming up · 2  ›". Tapping the row expands/collapses it (smooth animation, chevron rotates). Remember the open/closed state while the app is open.
+   - If Overdue and This week are both empty, open "Coming up" by default so the screen is never empty.
+
+4) WHY EACH CARD IS HERE
+   - The grey text line of every card starts with a source icon and the type label in bold, then the headline/suggestion:
+     "✉️ Payment due · Decide whether to pay the 180 EUR…"   or   "🏦 Large payment · …"
+   - Source icon: ✉️ if details.source = 'email', otherwise 🏦 (bank statement).
+   - Type labels: price_change "Price change", price_increase "Price increase", upcoming_bill "Upcoming bill", pending_payment "Payment due",
+     travel_booking "Trip", refund_offer "Refund", needs_check "Please check", duplicate_subscription "Possible duplicate",
+     unknown_debit "Unknown payment", irregular_large_debit "Large payment", spending_increase "Spending up".
+   - Stacked cards: show the icon(s) of their items (✉️🏦 if mixed) and "{n} updates".
+   - If a card has no headline and no suggestion, show only the icon and type label (no empty text).
+   - The text still wraps to max 2 lines with … .

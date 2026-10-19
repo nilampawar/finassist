@@ -1,0 +1,100 @@
+{
+  "results": [
+    {
+      "id": "B01",
+      "type": "price_change",
+      "category": [
+        "shopping",
+        "apps",
+        "streaming"
+      ],
+      "amount": 4.49,
+      "previous_amount": null,
+      "date": "2026-10-28",
+      "needs_attention": true,
+      "why": "Free trial turning paid; student budget"
+    },
+    {
+      "id": "B02",
+      "type": "travel_booking",
+      "is_for_user": true,
+      "travel_start": "2026-12-19",
+      "travel_end": "2027-01-06",
+      "needs_attention": true,
+      "why": "18-day trip; McFit 24.90 and Deutschlandticket 63 overlap (may be paused)"
+    },
+    {
+      "id": "B03",
+      "type": [
+        "pending_payment",
+        "upcoming_bill"
+      ],
+      "category": [
+        "education"
+      ],
+      "amount": 412.5,
+      "date": "2027-02-15",
+      "needs_attention": true,
+      "why": "Payment the student must make; agent may see the same amount paid last semester"
+    },
+    {
+      "id": "B04",
+      "type": "price_change",
+      "category": [
+        "fitness"
+      ],
+      "amount": 29.9,
+      "previous_amount": 24.9,
+      "date": "2027-01-01",
+      "needs_attention": true,
+      "why": "Email never states the old amount; agent must find 24.90 in the bank data (MCP test)"
+    },
+    {
+      "id": "C01",
+      "type": "price_change",
+      "category": [
+        "energy"
+      ],
+      "amount": 171.0,
+      "previous_amount": 158.0,
+      "date": "2026-12-01",
+      "needs_attention": true,
+      "why": "Second increase in a row (142 -> 158 -> 171); agent should find 158"
+    },
+    {
+      "id": "C02",
+      "type": "price_change",
+      "category": [
+        "education"
+      ],
+      "amount": 210.0,
+      "previous_amount": 180.0,
+      "date": "2027-01-01",
+      "needs_attention": true,
+      "why": "Education price change; uses the new category"
+    },
+    {
+      "id": "C03",
+      "type": "pending_payment",
+      "category": [
+        "education"
+      ],
+      "amount": 165.0,
+      "date": "2026-10-30",
+      "needs_attention": true,
+      "why": "One-off school payment; must NOT be treated as recurring"
+    },
+    {
+      "id": "R01",
+      "type": "refund_offer",
+      "category": [
+        "shopping"
+      ],
+      "amount": 49.99,
+      "voucher_amount": 60.0,
+      "date": "2026-10-31",
+      "needs_attention": true,
+      "why": "Choice between cash refund and a voucher worth 10.01 more; action flow drafts both replies"
+    }
+  ]
+}

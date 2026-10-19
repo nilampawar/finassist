@@ -1,0 +1,58 @@
+[
+  {
+    "id": "B01",
+    "send_to": "your.name+ben@gmail.com",
+    "from": "Amazon.de <prime@amazon.example>",
+    "subject": "Dein Prime Student Probezeitraum endet bald",
+    "body": "Hallo Ben,\n\ndein kostenloser Probezeitraum von Prime Student endet am 28.10.2026. Danach kostet deine Mitgliedschaft 4,49 € pro Monat und wird automatisch von deinem Konto abgebucht.\n\nDu kannst die Mitgliedschaft jederzeit in deinem Konto beenden.\n\nDein Amazon-Team"
+  },
+  {
+    "id": "B02",
+    "send_to": "your.name+ben@gmail.com",
+    "from": "Eurowings <booking@eurowings.example>",
+    "subject": "Buchungsbestätigung – Hannover nach Barcelona",
+    "body": "Buchungsbestätigung\n\nPassagier: Ben Neumann\nHinflug: 19.12.2026, Hannover (HAJ) – Barcelona (BCN)\nRückflug: 06.01.2027, Barcelona (BCN) – Hannover (HAJ)\nGesamtpreis: 189,98 EUR (bereits bezahlt)\n\nGute Reise!\nIhr Eurowings Team"
+  },
+  {
+    "id": "B03",
+    "send_to": "your.name+ben@gmail.com",
+    "from": "Leibniz Universität Hannover <studierendenservice@uni-hannover.example>",
+    "subject": "Rückmeldung zum Sommersemester 2027",
+    "body": "Liebe Studierende, lieber Studierender,\n\nbitte überweisen Sie den Semesterbeitrag für das Sommersemester 2027 in Höhe von 412,50 EUR bis zum 15.02.2027. Ohne fristgerechte Zahlung ist keine Rückmeldung möglich.\n\nMit freundlichen Grüßen\nIhr Studierendenservice"
+  },
+  {
+    "id": "B04",
+    "send_to": "your.name+ben@gmail.com",
+    "from": "McFit <service@mcfit.example>",
+    "subject": "Anpassung deines Mitgliedsbeitrags",
+    "body": "Hallo Ben,\n\nab dem 01.01.2027 passen wir die Beiträge an. Dein monatlicher Beitrag beträgt dann 29,90 EUR. Der Beitrag wird wie gewohnt per Lastschrift eingezogen.\n\nSportliche Grüße\nDein McFit Team"
+  },
+  {
+    "id": "C01",
+    "send_to": "your.name+clara@gmail.com",
+    "from": "Stadtwerke Hannover AG <kundenservice@stadtwerke-hannover.example>",
+    "subject": "Ihr neuer Abschlag ab Dezember",
+    "body": "Sehr geehrte Frau Weber,\n\nab dem 01.12.2026 beträgt Ihr monatlicher Abschlag für Strom und Gas 171,00 EUR. Der Betrag wird wie bisher per Lastschrift eingezogen.\n\nMit freundlichen Grüßen\nIhre Stadtwerke Hannover"
+  },
+  {
+    "id": "C02",
+    "send_to": "your.name+clara@gmail.com",
+    "from": "Landeshauptstadt Hannover <kita-gebuehren@hannover.example>",
+    "subject": "Neue Kita-Gebühren ab Januar 2027",
+    "body": "Sehr geehrte Frau Weber,\n\naufgrund der neuen Gebührensatzung beträgt die monatliche Kita-Gebühr für Ihr Kind Mia ab dem 01.01.2027 210,00 EUR. Die Gebühr wird weiterhin per Lastschrift eingezogen.\n\nMit freundlichen Grüßen\nFachbereich Kindertagesstätten"
+  },
+  {
+    "id": "C03",
+    "send_to": "your.name+clara@gmail.com",
+    "from": "Grundschule am Park <sekretariat@grundschule-park.example>",
+    "subject": "Klassenfahrt Klasse 2a – Kostenbeitrag",
+    "body": "Liebe Eltern der Klasse 2a,\n\nfür die Klassenfahrt nach Cuxhaven bitten wir um einen Kostenbeitrag von 165,00 EUR für Leon. Bitte überweisen Sie den Betrag bis zum 30.10.2026 auf das Klassenkonto.\n\nViele Grüße\nFrau Schulz"
+  },
+  {
+    "id": "R01",
+    "send_to": "your.name+clara@gmail.com",
+    "from": "Zalando <service@zalando.example>",
+    "subject": "Deine Rücksendung ist angekommen – wähle deine Erstattung",
+    "body": "Hallo Clara,\n\nwir haben deine Rücksendung (Bestellung 4471-2290) erhalten. Du kannst wählen:\n\n1) Erstattung von 49,99 EUR auf dein Konto\n2) Ein Gutschein über 60,00 EUR für deinen nächsten Einkauf\n\nBitte triff deine Wahl bis zum 31.10.2026. Ohne Auswahl erstatten wir automatisch auf dein Konto.\n\nDein Zalando-Team"
+  }
+]

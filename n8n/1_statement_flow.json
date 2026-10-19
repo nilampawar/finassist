@@ -1,0 +1,421 @@
+{
+  "name": "Statements-Inbox File Created",
+  "nodes": [
+    {
+      "parameters": {
+        "conditions": {
+          "combinator": "and",
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.mimeType }}",
+              "rightValue": "application/pdf",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e5f7788b-6c39-43aa-9da7-58b38d34926c",
+      "name": "Only PDF Files",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.3,
+      "position": [
+        -432,
+        32
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $json.id }}"
+        },
+        "options": {}
+      },
+      "id": "c425b8ca-b748-46a1-b21a-49baf3b3d2d7",
+      "name": "Download PDF",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -208,
+        32
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "id": "2457c789-38da-4525-808f-0f5dd470455b",
+      "name": "Extract PDF Text",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        16,
+        32
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const system = `You extract data from bank statements (Kontoauszug, Umsatzübersicht or similar), in German or English.\nReturn ONLY valid JSON, no other text.\n\nRules:\n- If the text is not a bank statement, return only: {\"is_statement\": false}\n- Dates as YYYY-MM-DD\n- Amounts as numbers with a dot (e.g. 1234.56)\n- Debits negative, credits positive\n- Keep payee and description exactly as written\n- normalised_payee: the short, clean company name (e.g. \"SEPA-LASTSCHRIFT VATTENF.\" -> \"Vattenfall\")\n- is_reversal: true for returned debits (Rücklastschrift), refunds or cancellations (Storno), otherwise false\n- account_id: the IBAN masked as first 4 + last 4 characters (e.g. \"DE00****0000\")\n- Give each transaction one category from this list only:\n  rent, energy, telecom, insurance, broadcasting_fee,\n  streaming, music, fitness, apps, transport,\n  groceries, drugstore, shopping, food_delivery, travel,\n  salary, pension, student_aid, child_benefit,\n  interest, transfer, education, memberships, donations, news_media, other\n- education = Kita/daycare, school (lunch, trips, fees), university/semester fees, music or tutoring lessons; memberships = clubs, associations, ADAC; donations = charities; news_media = newspapers and magazines.\n- child_benefit: Kindergeld from the Familienkasse\n- interest: Zinsen (account interest)\n- transfer: Umbuchung between own accounts, or money from private persons\n- If unsure, use \"other\"`;\n\nconst user = `Extract all data from this statement in this format:\n{\n  \"is_statement\": true,\n  \"bank\": \"\",\n  \"account_id\": \"\",\n  \"account_holder\": \"\",\n  \"period_start\": \"\",\n  \"period_end\": \"\",\n  \"opening_balance\": 0,\n  \"closing_balance\": 0,\n  \"transactions\": [\n    {\"date\": \"\", \"type\": \"\", \"payee\": \"\", \"normalised_payee\": \"\",\n     \"description\": \"\", \"amount\": 0, \"category\": \"\", \"is_reversal\": false}\n  ]\n}\n\nStatement text:\n` + $json.text;\n\nreturn {\n  json: {\n    body: {\n      model: \"claude-sonnet-5-5\",\n      max_tokens: 4000,\n      system: system,\n      messages: [{ role: \"user\", content: user }]\n    }\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        240,
+        32
+      ],
+      "id": "47abd8a1-0f0b-4962-b52d-113019e1b9f8",
+      "name": "Prepare – Instructions for Claude"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const crypto = require('crypto');\n\nconst ALLOWED = new Set([\"rent\", \"energy\", \"telecom\", \"insurance\", \"broadcasting_fee\",\n  \"streaming\", \"music\", \"fitness\", \"apps\", \"transport\",\n  \"groceries\", \"drugstore\", \"shopping\", \"food_delivery\", \"travel\",\n  \"salary\", \"pension\", \"student_aid\", \"child_benefit\",\n  \"interest\", \"transfer\", \"education\", \"memberships\", \"donations\", \"news_media\", \"other\"]);\n\nconst makeKey = (...parts) =>\n  crypto.createHash('sha256').update(parts.map(String).join('|')).digest('hex');\nconst cents = (x) => Math.round(Number(x) * 100);\n\n// File details from the trigger. The name must match your trigger node EXACTLY.\nconst trigger = $('Trigger – New statement uploaded').item.json;\nconst fileInfo = { file_id: trigger.id, file_name: trigger.name };\nconst fail = (reason, extra = {}) =>\n  ({ json: { ...fileInfo, is_valid: false, failure_reason: reason, ...extra } });\n\n\n// 1. Was Claude's answer complete and readable?\nif ($json.stop_reason === \"max_tokens\") {\n  return fail(\"incomplete_response\", { note: \"answer cut off (max_tokens)\" });\n}\nlet text = (($json.content || []).find(b => b.type === \"text\")?.text || \"\").trim();\nconst start = text.indexOf(\"{\");\nconst end = text.lastIndexOf(\"}\");\nlet data;\ntry {\n  data = JSON.parse(text.slice(start, end + 1));\n} catch (e) {\n  return fail(\"incomplete_response\", { note: \"could not read JSON\", error: e.message,\n                                       preview: text.slice(0, 300) });\n}\n\n// 2. Wrong file\nif (data.is_statement === false) return fail(\"not_a_statement\");\n\n// 3. Required fields and at least one transaction\nconst required = [\"period_start\", \"period_end\", \"opening_balance\", \"closing_balance\", \"transactions\"];\nif (required.some(f => data[f] === undefined || data[f] === null || data[f] === \"\") ||\n    !Array.isArray(data.transactions) || data.transactions.length === 0) {\n  return fail(\"missing_fields\");\n}\n\n// 4. Account found? Mask IBAN (guaranteed)\nconst raw = String(data.account_id || \"\").replace(/\\s/g, \"\");\nif (raw.length < 8) return fail(\"missing_account\");\nconst account_id = raw.slice(0, 4) + \"****\" + raw.slice(-4);\n\n// 5. Balances add up? (compared in cents to avoid rounding issues)\nconst total = data.transactions.reduce((s, t) => s + cents(t.amount), 0);\nconst expected = cents(data.closing_balance) - cents(data.opening_balance);\nconst is_valid = total === expected;\n\n// Keys (transaction key uses the RAW payee, so Claude's spelling can't create duplicates)\nconst statement_key = makeKey(account_id, data.period_start, data.period_end,\n                              data.opening_balance, data.closing_balance);\nconst seen = {};\nfor (const t of data.transactions) {\n  t.normalised_payee = t.normalised_payee || t.payee;\n  t.is_reversal = Boolean(t.is_reversal);\n  t.category = ALLOWED.has(t.category) ? t.category : \"other\";\n  const base = [account_id, t.date, t.payee, t.amount, t.description || \"\"].join('|');\n  seen[base] = (seen[base] || 0) + 1;\n  t.idempotency_key = makeKey(base, seen[base]);\n}\n\nreturn {\n  json: {\n    ...fileInfo,\n     is_valid: is_valid,\n    failure_reason: is_valid ? \"\" : \"balance_mismatch\",\n    statement_key,\n    account_id,\n    period_start: data.period_start,\n    period_end: data.period_end,\n    opening_balance: data.opening_balance,\n    closing_balance: data.closing_balance,\n    transaction_count: data.transactions.length,\n    transactions: data.transactions\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        640,
+        32
+      ],
+      "id": "123e1c46-532c-463c-8527-9d55ef9b29be",
+      "name": "Rules – Validate balances and create keys"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "YOUR_DRIVE_FOLDER_URL",
+          "mode": "url"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "id": "2781436b-aaae-4d6d-af9d-c26c0be8cf8d",
+      "name": "Trigger – New statement uploaded",
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        -656,
+        32
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "anthropicApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.body }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        464,
+        32
+      ],
+      "id": "4664a59a-fd5b-48bb-bed1-426c01899d4a",
+      "name": "AI – Claude reads statement",
+      "credentials": {
+        "anthropicApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "Every transaction gets a fingerprint (the key), so the database can recognise it if the same statement is uploaded again.\n\nBefore: the fingerprint included the tidy name Claude chose, e.g. \"Disney+\". But Claude doesn't always choose the same name; once it wrote \"Disney Plus.\" Same transaction, different fingerprint, so it could be saved twice.\nNow: the fingerprint uses the exact text printed on the bank statement, e.g. \"Disney Plus.\" That text never changes, so the same transaction always gets the same fingerprint.",
+        "height": 208,
+        "width": 384
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        544,
+        208
+      ],
+      "typeVersion": 1,
+      "id": "67671e35-9f56-4fcd-acd3-11227ad897a0",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "cf962936-2cb4-4ed2-be45-a643ff5f1ab6",
+              "leftValue": "={{ $json.is_valid }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        816,
+        48
+      ],
+      "id": "d4db562b-c338-4e20-b0be-8c26858b5de1",
+      "name": "Is statement valid"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://YOUR_PROJECT_REF.supabase.co/rest/v1/rpc/record_upload_status",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"p_file_id\": \"{{ $json.file_id }}\",\n  \"p_file_name\": \"{{ $json.file_name }}\",\n  \"p_status\": \"failed\",\n  \"p_reason\": \"{{ $json.failure_reason }}\"\n}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "text"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        1040,
+        144
+      ],
+      "id": "d71301a6-5c69-4c0b-8b0c-e5d456a0167a",
+      "name": "Log – Record failed upload",
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://YOUR_PROJECT_REF.supabase.co/rest/v1/rpc/save_statement",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"p_file_id\": \"{{ $json.file_id }}\",\n  \"p_file_name\": \"{{ $json.file_name }}\",\n  \"p_statement\": {{ JSON.stringify({\n    statement_key: $json.statement_key,\n    account_id: $json.account_id,\n    period_start: $json.period_start,\n    period_end: $json.period_end,\n    opening_balance: $json.opening_balance,\n    closing_balance: $json.closing_balance\n  }) }},\n  \"p_transactions\": {{ JSON.stringify($json.transactions) }}\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        1040,
+        -48
+      ],
+      "id": "f9a840f7-cd37-403b-9dc4-b3c27f9a0496",
+      "name": "Save – Store statement and transactions",
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://YOUR_PROJECT_REF.supabase.co/rest/v1/rpc/detect_all_signals",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "supabaseApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"p_account\": \"{{ $json.account_id }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        1264,
+        -48
+      ],
+      "id": "f92af20c-87ee-4820-8be6-ffbdc89f67e3",
+      "name": "Detect – Find signals",
+      "credentials": {
+        "supabaseApi": {
+          "id": "YOUR_CREDENTIAL_ID",
+          "name": "Supabase account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Only PDF Files": {
+      "main": [
+        [
+          {
+            "node": "Download PDF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download PDF": {
+      "main": [
+        [
+          {
+            "node": "Extract PDF Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract PDF Text": {
+      "main": [
+        [
+          {
+            "node": "Prepare – Instructions for Claude",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare – Instructions for Claude": {
+      "main": [
+        [
+          {
+            "node": "AI – Claude reads statement",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trigger – New statement uploaded": {
+      "main": [
+        [
+          {
+            "node": "Only PDF Files",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI – Claude reads statement": {
+      "main": [
+        [
+          {
+            "node": "Rules – Validate balances and create keys",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rules – Validate balances and create keys": {
+      "main": [
+        [
+          {
+            "node": "Is statement valid",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is statement valid": {
+      "main": [
+        [
+          {
+            "node": "Save – Store statement and transactions",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Log – Record failed upload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save – Store statement and transactions": {
+      "main": [
+        [
+          {
+            "node": "Detect – Find signals",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "nodeGroups": [],
+  "tags": []
+}

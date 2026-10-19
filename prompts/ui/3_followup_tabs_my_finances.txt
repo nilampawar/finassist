@@ -1,0 +1,51 @@
+Update the app as below. Keep the current look (colours, fonts, illustrations, slim cards), data access, the detail bottom sheet and the feedback buttons as they are.
+
+=== A) TABS ===
+- Delete the "Upcoming" tab, its page and its code.
+- Rename the "Recurring" tab to "My Finances" (icon: wallet).
+- The bottom bar has two tabs, evenly spaced: "Attention" and "My Finances". Keep the tab bar as a list so a tab can be added later without redesign.
+
+=== B) ATTENTION TAB ===
+1) Briefing card at the top: COUNTS ONLY, always exactly 2 short lines, fixed height (never grows), with the existing illustration on the right.
+   Use the same groups as the cards below (Overdue, This week, Coming up, Good to know) and count the CARDS shown (a stacked card counts as 1):
+   - If Overdue > 0:   line 1 "{o} overdue · {w} this week" (soft red tint),        line 2 "{rest} can wait"
+   - Else if This week > 0: line 1 "{w} need you this week" (soft amber tint),     line 2 "{rest} can wait"
+   - Else if any cards:  line 1 "Nothing urgent this week 🌿" (soft mint tint),    line 2 "{rest} can wait"
+   - No cards at all:    line 1 "All clear 🌿" (soft mint tint), hide line 2.
+   ({rest} = Coming up + Good to know. Use singular/plural correctly: "1 needs you", "3 need you". Hide "· 0 this week".)
+   Never write fixed numbers or names in this card – everything is calculated from the data.
+
+2) Stack cards with the same payee:
+   - Cards of the same account whose normalised_payee matches (case-insensitive, trimmed) are shown as ONE card: "{Payee} · {n} updates".
+   - The stack goes into the group of its MOST URGENT item (Overdue > This week > Coming up > Good to know); its date pill shows the nearest date.
+   - The stack's text line shows the most urgent item's headline/suggestion (2 lines max); the amount shows that item's amount.
+   - Tapping a stack opens a bottom sheet listing its items (each as a slim row: type label, date pill, amount, 1-line text); tapping an item opens its normal detail sheet.
+   - A payee with only one card stays a normal card.
+
+=== C) MY FINANCES TAB (was Recurring) ===
+1) Top card "Your month at a glance" (replaces the plain teal total card), same style as the Attention briefing, fixed height, illustration on the right (calm house/calendar scene in the teal palette):
+   - Line 1: "Regular payments: {Y} € / month"  (Y = sum of recurring_payment amounts)
+   - Line 2 (only if a regular_income signal exists): "In {X} € · Left {X−Y} €" (Left in green if positive, red if negative)
+   - Line 3 (only if > 0): "{n} heads-up(s) below" = number of payment rows that carry a tag (see 4). Soft amber tint if n > 0, otherwise soft mint.
+2) Donut "Where it goes": keep it. In the centre show the largest category and its share (e.g. "Rent 77%"). Top 3 categories next to it with amount and %.
+3) Payment list: one SLIM ROW per payment (about 60px), grouped by category with a small header "● Category · total".
+   Row: category icon in a pastel circle (category icons only, no brand logos) · payee (1 line, truncate with …) · monthly amount. Do not repeat the category name inside the row.
+4) Tags that link to what is coming (generic, from data – never hard-code names):
+   For each recurring payment, look for an Attention signal of the same account whose normalised_payee matches (case-insensitive, trimmed), or whose details.subscriptions list contains that payee:
+   - price_change / price_increase with a date today or later: amber tag "→ {new amount} € from {date}".
+   - price_change / price_increase with a past date or no date: amber tag "Price went up".
+   - duplicate_subscription: purple tag "Possible duplicate".
+   - any other Attention signal: grey tag "Needs a look".
+   At most one tag per row (priority in the order above). Tapping the tag opens that signal's detail sheet.
+5) Income section at the bottom: slim rows (payee, amount in green). Hide the section if there is no income.
+
+=== D) GENERAL RULES FOR ALL SCREENS (robust when cards are added or removed) ===
+- Never hard-code payees, amounts, counts, dates or category names; everything comes from the data.
+- Every list must look right with 0, 1 or many items: 0 -> friendly empty state with a small illustration; many -> the list scrolls while headers, top cards, charts and the bottom bar keep their size.
+- Top cards have a fixed height; they never grow with the data.
+- Hide empty groups and sections instead of showing blank boxes.
+- Long text: payee names 1 line with …, descriptions 2 lines max. Amounts never wrap or overflow.
+- Missing values (null amount, no date, unknown category) are left out; unknown categories use the grey "other" icon. Never show "null", "undefined", "NaN", or "0,00 €" for a missing amount.
+- Charts: one category -> full ring; more than 6 categories -> top 5 plus "Other".
+- Counts and badges are always calculated from the current data.
+- Switching person reloads all data; nothing from the previous person stays on screen.

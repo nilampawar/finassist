@@ -1,0 +1,113 @@
+{
+  "file": "Test_A_English_layout.pdf",
+  "tests": "English labels, DD/MM/YYYY dates, English number format, amount before details, payee and description in one column, new categories (apps, shopping, travel)",
+  "is_statement": true,
+  "account_id": "DE11****0011",
+  "period_start": "2026-10-01",
+  "period_end": "2026-10-31",
+  "opening_balance": 2400.0,
+  "closing_balance": 4224.04,
+  "transaction_count": 8,
+  "transactions": [
+    {
+      "date": "2026-10-01",
+      "payee": "Wohnbau Nord GmbH",
+      "amount": -720.0,
+      "accepted_normalised_payee": [
+        "Wohnbau Nord"
+      ],
+      "accepted_category": [
+        "rent"
+      ],
+      "is_reversal": false
+    },
+    {
+      "date": "2026-10-03",
+      "payee": "Stadtwerke Hannover AG",
+      "amount": -66.0,
+      "accepted_normalised_payee": [
+        "Stadtwerke Hannover",
+        "enercity",
+        "Stadtwerke"
+      ],
+      "accepted_category": [
+        "energy"
+      ],
+      "is_reversal": false
+    },
+    {
+      "date": "2026-10-05",
+      "payee": "Vodafone GmbH",
+      "amount": -29.99,
+      "accepted_normalised_payee": [
+        "Vodafone"
+      ],
+      "accepted_category": [
+        "telecom"
+      ],
+      "is_reversal": false
+    },
+    {
+      "date": "2026-10-09",
+      "payee": "Apple Services",
+      "amount": -2.99,
+      "accepted_normalised_payee": [
+        "Apple",
+        "iCloud",
+        "Apple Services"
+      ],
+      "accepted_category": [
+        "apps"
+      ],
+      "is_reversal": false
+    },
+    {
+      "date": "2026-10-14",
+      "payee": "Edeka Center",
+      "amount": -84.63,
+      "accepted_normalised_payee": [
+        "Edeka"
+      ],
+      "accepted_category": [
+        "groceries"
+      ],
+      "is_reversal": false
+    },
+    {
+      "date": "2026-10-17",
+      "payee": "Zalando SE",
+      "amount": -59.95,
+      "accepted_normalised_payee": [
+        "Zalando"
+      ],
+      "accepted_category": [
+        "shopping"
+      ],
+      "is_reversal": false
+    },
+    {
+      "date": "2026-10-20",
+      "payee": "Lufthansa",
+      "amount": -312.4,
+      "accepted_normalised_payee": [
+        "Lufthansa"
+      ],
+      "accepted_category": [
+        "travel"
+      ],
+      "is_reversal": false
+    },
+    {
+      "date": "2026-10-27",
+      "payee": "Example Software GmbH",
+      "amount": 3100.0,
+      "accepted_normalised_payee": [
+        "Example Software"
+      ],
+      "accepted_category": [
+        "salary"
+      ],
+      "is_reversal": false
+    }
+  ]
+}

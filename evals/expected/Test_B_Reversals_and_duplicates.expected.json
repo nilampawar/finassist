@@ -1,0 +1,121 @@
+{
+  "file": "Test_B_Reversals_and_duplicates.pdf",
+  "tests": "Rücklastschrift and Storno flagged as reversals, two identical REWE payments on the same day both kept, messy payee strings normalised",
+  "is_statement": true,
+  "account_id": "DE22****4422",
+  "period_start": "2026-11-01",
+  "period_end": "2026-11-30",
+  "opening_balance": 1500.0,
+  "closing_balance": 3739.61,
+  "transaction_count": 9,
+  "transactions": [
+    {
+      "date": "2026-11-01",
+      "payee": "SEPA-LASTSCHRIFT VATTENF. EUROPE SALES",
+      "amount": -94.0,
+      "accepted_normalised_payee": [
+        "Vattenfall"
+      ],
+      "accepted_category": [
+        "energy"
+      ],
+      "is_reversal": false
+    },
+    {
+      "date": "2026-11-04",
+      "payee": "PAYPAL *NETFLIX.COM",
+      "amount": -13.99,
+      "accepted_normalised_payee": [
+        "Netflix"
+      ],
+      "accepted_category": [
+        "streaming"
+      ],
+      "is_reversal": false
+    },
+    {
+      "date": "2026-11-07",
+      "payee": "FitX Deutschland GmbH",
+      "amount": -24.99,
+      "accepted_normalised_payee": [
+        "FitX"
+      ],
+      "accepted_category": [
+        "fitness"
+      ],
+      "is_reversal": false
+    },
+    {
+      "date": "2026-11-09",
+      "payee": "FitX Deutschland GmbH",
+      "amount": 24.99,
+      "accepted_normalised_payee": [
+        "FitX"
+      ],
+      "accepted_category": [
+        "fitness"
+      ],
+      "is_reversal": true
+    },
+    {
+      "date": "2026-11-12",
+      "payee": "REWE Markt Hannover",
+      "amount": -51.2,
+      "accepted_normalised_payee": [
+        "REWE"
+      ],
+      "accepted_category": [
+        "groceries"
+      ],
+      "is_reversal": false
+    },
+    {
+      "date": "2026-11-12",
+      "payee": "REWE Markt Hannover",
+      "amount": -51.2,
+      "accepted_normalised_payee": [
+        "REWE"
+      ],
+      "accepted_category": [
+        "groceries"
+      ],
+      "is_reversal": false
+    },
+    {
+      "date": "2026-11-14",
+      "payee": "AMAZON EU S.A R.L.",
+      "amount": -45.9,
+      "accepted_normalised_payee": [
+        "Amazon"
+      ],
+      "accepted_category": [
+        "shopping"
+      ],
+      "is_reversal": false
+    },
+    {
+      "date": "2026-11-19",
+      "payee": "AMAZON EU S.A R.L.",
+      "amount": 45.9,
+      "accepted_normalised_payee": [
+        "Amazon"
+      ],
+      "accepted_category": [
+        "shopping"
+      ],
+      "is_reversal": true
+    },
+    {
+      "date": "2026-11-28",
+      "payee": "Muster Technologies GmbH",
+      "amount": 2450.0,
+      "accepted_normalised_payee": [
+        "Muster Technologies"
+      ],
+      "accepted_category": [
+        "salary"
+      ],
+      "is_reversal": false
+    }
+  ]
+}

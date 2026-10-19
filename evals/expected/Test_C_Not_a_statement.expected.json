@@ -1,0 +1,5 @@
+{
+  "file": "Test_C_Not_a_statement.pdf",
+  "tests": "An invoice, not a statement, even though it mentions an IBAN and amounts",
+  "is_statement": false
+}

@@ -1,0 +1,32 @@
+Update ONLY the "Attention" tab. Keep everything else (data, detail bottom sheet, other tabs, colours, feedback) as it is.
+
+1) REMOVE the savings overview box ("You could save up to … €" and the ring) completely. The Attention tab is about helping the person act, not about savings. Never add amounts together into a total.
+
+2) PRIORITY (calculated in code for every card, using today's date):
+   - "Overdue"   (red #EF4444):   details.source = 'email' AND details.due_date is before today AND signal_type is pending_payment or upcoming_bill.
+   - "This week" (amber #F59E0B): the due date (details.due_date, or details.travel_start) is today or within the next 7 days.
+   - "Coming up" (teal #0D9488):  the due date is more than 7 days away.
+   - "Good to know" (slate #64748B): no due date, or the signal comes from the bank statement (no details.source = 'email') – these already happened, so never show their date as a deadline.
+
+3) BRIEFING CARD at the top (replaces the savings box) – reads like a short note from a personal assistant, not a to-do list:
+   - Line 1: greeting by time of day + first name: "Good morning / Good afternoon / Good evening, Anna 👋".
+   - Then 1–2 sentences about the MOST important cards only (overdue first, then "this week", nearest date first), using the action headline if there is one (else details.suggestion), shortened to one sentence each. Example:
+     "Two things matter this week:" followed by two short bullet lines like "Your Audible trial ends tomorrow – decide whether to keep it." and "The school trip (180,00 €) is due today."
+   - If something is overdue, start with it: "One payment is overdue: …".
+   - Last line, calm tone: "Everything else can wait – N more below when you have time."
+   - If there is nothing overdue or this week: "Nothing urgent this week 🌿 – N things to look at when you have time."
+   - The card's colour follows the highest priority: soft red tint if anything is overdue, soft amber tint if something is this week, soft mint if nothing is urgent.
+   - On the right side of the card, a small flat illustration (teal palette, unDraw style) that matches the mood: a person with a calendar/alarm when something is urgent, a relaxed person with a plant/coffee when nothing is urgent.
+
+4) CARD LIST below the briefing, grouped under small section headers with a coloured dot and count:
+   "Overdue" · "This week" · "Coming up" · "Good to know" (hide empty groups). Inside each group: nearest date first, then larger amount first.
+   Remove the date column / timeline layout on this tab (keep the timeline for the Upcoming tab only).
+
+5) SLIM CARDS (about 76px high, white, rounded 14px, 4px left border in the PRIORITY colour):
+   - Left: category icon in a small pastel circle (use category icons only – no brand logos).
+   - Middle: payee (bold, 1 line) and below it the headline/suggestion in up to 2 lines (not 1), smaller grey text.
+   - Right: amount, and under it a small date pill in the priority colour ("Overdue 12 days", "Tomorrow", "15 Oct", or nothing for "Good to know").
+   - Done cards (marked done on this device) move to the bottom of their group, greyed out with a green check.
+   - Tapping a card opens the existing detail bottom sheet (unchanged).
+
+6) Keep the "N to review" badge on the tab icon. Keep the footer "Suggestions only – FinAssist never moves money."

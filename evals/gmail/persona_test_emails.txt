@@ -1,0 +1,128 @@
+============================================================
+B01   SEND TO: your.name+ben@gmail.com
+(original sender: Amazon.de <prime@amazon.example>)
+============================================================
+Subject: Dein Prime Student Probezeitraum endet bald
+
+Body:
+Hallo Ben,
+
+dein kostenloser Probezeitraum von Prime Student endet am 28.10.2026. Danach kostet deine Mitgliedschaft 4,49 € pro Monat und wird automatisch von deinem Konto abgebucht.
+
+Du kannst die Mitgliedschaft jederzeit in deinem Konto beenden.
+
+Dein Amazon-Team
+
+
+============================================================
+B02   SEND TO: your.name+ben@gmail.com
+(original sender: Eurowings <booking@eurowings.example>)
+============================================================
+Subject: Buchungsbestätigung – Hannover nach Barcelona
+
+Body:
+Buchungsbestätigung
+
+Passagier: Ben Neumann
+Hinflug: 19.12.2026, Hannover (HAJ) – Barcelona (BCN)
+Rückflug: 06.01.2027, Barcelona (BCN) – Hannover (HAJ)
+Gesamtpreis: 189,98 EUR (bereits bezahlt)
+
+Gute Reise!
+Ihr Eurowings Team
+
+
+============================================================
+B03   SEND TO: your.name+ben@gmail.com
+(original sender: Leibniz Universität Hannover <studierendenservice@uni-hannover.example>)
+============================================================
+Subject: Rückmeldung zum Sommersemester 2027
+
+Body:
+Liebe Studierende, lieber Studierender,
+
+bitte überweisen Sie den Semesterbeitrag für das Sommersemester 2027 in Höhe von 412,50 EUR bis zum 15.02.2027. Ohne fristgerechte Zahlung ist keine Rückmeldung möglich.
+
+Mit freundlichen Grüßen
+Ihr Studierendenservice
+
+
+============================================================
+B04   SEND TO: your.name+ben@gmail.com
+(original sender: McFit <service@mcfit.example>)
+============================================================
+Subject: Anpassung deines Mitgliedsbeitrags
+
+Body:
+Hallo Ben,
+
+ab dem 01.01.2027 passen wir die Beiträge an. Dein monatlicher Beitrag beträgt dann 29,90 EUR. Der Beitrag wird wie gewohnt per Lastschrift eingezogen.
+
+Sportliche Grüße
+Dein McFit Team
+
+
+============================================================
+C01   SEND TO: your.name+clara@gmail.com
+(original sender: Stadtwerke Hannover AG <kundenservice@stadtwerke-hannover.example>)
+============================================================
+Subject: Ihr neuer Abschlag ab Dezember
+
+Body:
+Sehr geehrte Frau Weber,
+
+ab dem 01.12.2026 beträgt Ihr monatlicher Abschlag für Strom und Gas 171,00 EUR. Der Betrag wird wie bisher per Lastschrift eingezogen.
+
+Mit freundlichen Grüßen
+Ihre Stadtwerke Hannover
+
+
+============================================================
+C02   SEND TO: your.name+clara@gmail.com
+(original sender: Landeshauptstadt Hannover <kita-gebuehren@hannover.example>)
+============================================================
+Subject: Neue Kita-Gebühren ab Januar 2027
+
+Body:
+Sehr geehrte Frau Weber,
+
+aufgrund der neuen Gebührensatzung beträgt die monatliche Kita-Gebühr für Ihr Kind Mia ab dem 01.01.2027 210,00 EUR. Die Gebühr wird weiterhin per Lastschrift eingezogen.
+
+Mit freundlichen Grüßen
+Fachbereich Kindertagesstätten
+
+
+============================================================
+C03   SEND TO: your.name+clara@gmail.com
+(original sender: Grundschule am Park <sekretariat@grundschule-park.example>)
+============================================================
+Subject: Klassenfahrt Klasse 2a – Kostenbeitrag
+
+Body:
+Liebe Eltern der Klasse 2a,
+
+für die Klassenfahrt nach Cuxhaven bitten wir um einen Kostenbeitrag von 165,00 EUR für Leon. Bitte überweisen Sie den Betrag bis zum 30.10.2026 auf das Klassenkonto.
+
+Viele Grüße
+Frau Schulz
+
+
+============================================================
+R01   SEND TO: your.name+clara@gmail.com
+(original sender: Zalando <service@zalando.example>)
+============================================================
+Subject: Deine Rücksendung ist angekommen – wähle deine Erstattung
+
+Body:
+Hallo Clara,
+
+wir haben deine Rücksendung (Bestellung 4471-2290) erhalten. Du kannst wählen:
+
+1) Erstattung von 49,99 EUR auf dein Konto
+2) Ein Gutschein über 60,00 EUR für deinen nächsten Einkauf
+
+Bitte triff deine Wahl bis zum 31.10.2026. Ohne Auswahl erstatten wir automatisch auf dein Konto.
+
+Dein Zalando-Team
+
+

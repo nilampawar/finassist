@@ -1,0 +1,182 @@
+TEST EMAILS FOR THE GMAIL FLOW
+Send each one TO: your.name+finance@gmail.com
+Copy the Subject line into the subject field, and the text below 'Body' into the message.
+Start with E01, E07 and E09.
+
+============================================================
+E01   (original sender: Vattenfall Europe Sales GmbH <kundenservice@vattenfall.example>)
+============================================================
+Subject: Anpassung Ihres monatlichen Abschlags ab 01.12.2026
+
+Body:
+Sehr geehrte Frau Beispiel,
+
+aufgrund gestiegener Beschaffungskosten passen wir Ihren monatlichen Abschlag für Strom an. Ab dem 01.12.2026 beträgt Ihr Abschlag 102,00 EUR statt bisher 94,00 EUR. Der Betrag wird wie gewohnt per Lastschrift eingezogen.
+
+Ihnen steht ein Sonderkündigungsrecht zu.
+
+Mit freundlichen Grüßen
+Ihr Vattenfall Kundenservice
+
+
+============================================================
+E02   (original sender: Audible <noreply@audible.example>)
+============================================================
+Subject: Dein Probemonat endet bald
+
+Body:
+Hallo Anna,
+
+dein kostenloser Probemonat bei Audible endet am 15.10.2026. Danach kostet dein Abo 9,95 EUR pro Monat. Die erste Zahlung wird am 15.10.2026 von deinem Konto abgebucht.
+
+Viel Spaß beim Hören!
+Dein Audible Team
+
+
+============================================================
+E03   (original sender: Telekom Deutschland GmbH <rechnung@telekom.example>)
+============================================================
+Subject: Ihre Mobilfunk-Rechnung Oktober 2026
+
+Body:
+Guten Tag Anna Beispiel,
+
+Ihre Rechnung für Oktober 2026 ist da. Rechnungsbetrag: 39,95 EUR. Der Betrag wird am 03.11.2026 per Lastschrift von Ihrem Konto abgebucht. Sie müssen nichts weiter tun.
+
+Ihre Telekom
+
+
+============================================================
+E04   (original sender: Hausverwaltung Meier GmbH <buchhaltung@meier-hv.example>)
+============================================================
+Subject: Nebenkostenabrechnung 2025 – Nachzahlung
+
+Body:
+Sehr geehrte Frau Beispiel,
+
+anbei erhalten Sie die Nebenkostenabrechnung für das Jahr 2025. Es ergibt sich eine Nachzahlung in Höhe von 186,40 EUR. Bitte überweisen Sie den Betrag bis zum 05.11.2026 auf das bekannte Konto (Verwendungszweck: NK 2025 Whg 3.OG).
+
+Mit freundlichen Grüßen
+Hausverwaltung Meier
+
+
+============================================================
+E05   (original sender: Grundschule am Park <sekretariat@gs-park.example>)
+============================================================
+Subject: Klassenfahrt Klasse 3b – Kostenbeitrag
+
+Body:
+Liebe Eltern,
+
+für die Klassenfahrt der Klasse 3b nach Bad Harzburg bitten wir um einen Kostenbeitrag von 180,00 EUR pro Kind. Bitte überweisen Sie den Betrag bis spätestens Mittwoch, 14.10.2026, auf das Klassenkonto.
+
+Vielen Dank!
+Das Sekretariat
+
+
+============================================================
+E06   (original sender: Yoga Studio Lindener Hof <info@yoga-linden.example>)
+============================================================
+Subject: Deine Anmeldung: Herbst-Workshop – Zahlung ausstehend
+
+Body:
+Hallo Anna,
+
+danke für deine Anmeldung zum Herbst-Workshop am 24.10.2026. Dein Platz ist reserviert, sobald die Teilnahmegebühr von 45,00 EUR eingegangen ist. Bitte zahle bis zum 17.10.2026.
+
+Namaste
+Dein Yoga Studio
+
+
+============================================================
+E07   (original sender: Lufthansa <buchung@lufthansa.example>)
+============================================================
+Subject: Ihre Buchungsbestätigung – Hannover nach Lissabon
+
+Body:
+Buchungsbestätigung
+
+Passagier: Anna Beispiel
+Hinflug: 20.11.2026, Hannover (HAJ) – Lissabon (LIS)
+Rückflug: 08.12.2026, Lissabon (LIS) – Hannover (HAJ)
+Gesamtpreis: 312,40 EUR (bereits bezahlt)
+
+Gute Reise!
+Ihre Lufthansa
+
+
+============================================================
+E08   (original sender: Lufthansa <buchung@lufthansa.example>)
+============================================================
+Subject: Ihre Buchungsbestätigung – Hannover nach Rom
+
+Body:
+Buchungsbestätigung
+
+Passagier: Max Mustermann
+Hinflug: 02.11.2026, Hannover (HAJ) – Rom (FCO)
+Rückflug: 23.11.2026, Rom (FCO) – Hannover (HAJ)
+Gesamtpreis: 289,00 EUR (bereits bezahlt)
+
+Gute Reise!
+Ihre Lufthansa
+
+
+============================================================
+E09   (original sender: StromVergleich24 <news@stromvergleich24.example>)
+============================================================
+Subject: Achtung: Strompreise steigen! Jetzt wechseln und 300 EUR sparen
+
+Body:
+Hallo,
+
+viele Anbieter erhöhen ab Dezember ihre Preise. Vergleichen Sie jetzt und sichern Sie sich bis zu 300 EUR Neukundenbonus!
+
+Jetzt vergleichen >>
+
+Ihr StromVergleich24-Team
+
+
+============================================================
+E10   (original sender: FitX Deutschland GmbH <service@fitx.example>)
+============================================================
+Subject: Zahlungserinnerung: offener Betrag
+
+Body:
+Hallo Anna,
+
+leider konnten wir deinen Mitgliedsbeitrag in Höhe von 24,99 EUR nicht einziehen. Bitte überweise den Betrag bis zum 30.09.2026.
+
+Dein FitX Team
+
+
+============================================================
+E11   (original sender: Vattenfall Europe Sales GmbH <kundenservice@vattenfall.example>)
+============================================================
+Subject: Ihr neuer Abschlagsplan ab Dezember 2026
+
+Body:
+Sehr geehrte Frau Beispiel,
+
+anbei erhalten Sie Ihren neuen Abschlagsplan für Strom (Vertragskonto 4471).
+
+Ab dem 01.12.2026 buchen wir monatlich 120,00 EUR per Lastschrift von Ihrem Konto ab.
+
+Mit freundlichen Grüßen
+Ihr Vattenfall Kundenservice
+
+
+============================================================
+E12   (original sender: Vattenfall Europe Sales GmbH <kundenservice@vattenfall.example>)
+============================================================
+Subject: Ihr neuer Abschlagsplan ab Dezember 2026
+
+Body:
+Sehr geehrte Frau Beispiel,
+
+anbei erhalten Sie Ihren neuen Abschlagsplan für Strom (Vertragskonto 4471).
+
+Ab dem 01.11.2026 buchen wir monatlich 125,00 EUR per Lastschrift von Ihrem Konto ab.
+
+Mit freundlichen Grüßen
+Ihr Vattenfall Kundenservice

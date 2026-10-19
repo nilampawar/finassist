@@ -1,0 +1,302 @@
+{
+  "description": "Expected active signals per test account after all statements are processed and detect_all_signals has run. Payee names may vary slightly (Claude normalises them), so accepted names are listed.",
+  "accounts": {
+    "DE00****0000": {
+      "source": "Musterbank Aug-Oct 2026 (3 months)",
+      "counts": {
+        "regular_income": 1,
+        "recurring_payment": 8,
+        "duplicate_subscription": 1,
+        "price_increase": 1,
+        "unknown_debit": 1,
+        "irregular_large_debit": 2,
+        "spending_increase": 0
+      },
+      "signals": [
+        {
+          "type": "regular_income",
+          "payee": [
+            "Muster Technologies"
+          ],
+          "amount": 2450.0,
+          "confidence": 0.9,
+          "provisional": false
+        },
+        {
+          "type": "recurring_payment",
+          "payee": [
+            "Hausverwaltung Meier"
+          ],
+          "category": "rent",
+          "amount": 850.0,
+          "confidence": 0.9,
+          "provisional": false
+        },
+        {
+          "type": "recurring_payment",
+          "payee": [
+            "Vattenfall"
+          ],
+          "category": "energy",
+          "amount": 94.0,
+          "confidence": 0.9,
+          "provisional": false
+        },
+        {
+          "type": "recurring_payment",
+          "payee": [
+            "Telekom",
+            "Deutsche Telekom"
+          ],
+          "category": "telecom",
+          "amount": 39.95,
+          "confidence": 0.9,
+          "provisional": false
+        },
+        {
+          "type": "recurring_payment",
+          "payee": [
+            "Netflix"
+          ],
+          "category": "streaming",
+          "amount": 13.99,
+          "confidence": 0.9,
+          "provisional": false
+        },
+        {
+          "type": "recurring_payment",
+          "payee": [
+            "Spotify"
+          ],
+          "category": "music",
+          "amount": 10.99,
+          "confidence": 0.9,
+          "provisional": false
+        },
+        {
+          "type": "recurring_payment",
+          "payee": [
+            "Disney+",
+            "Disney Plus"
+          ],
+          "category": "streaming",
+          "amount": 9.99,
+          "confidence": 0.9,
+          "provisional": false
+        },
+        {
+          "type": "recurring_payment",
+          "payee": [
+            "FitX"
+          ],
+          "category": "fitness",
+          "amount": 24.99,
+          "confidence": 0.9,
+          "provisional": false
+        },
+        {
+          "type": "recurring_payment",
+          "payee": [
+            "Deutsche Bahn",
+            "DB"
+          ],
+          "category": "transport",
+          "amount": 63.0,
+          "confidence": 0.9,
+          "provisional": false
+        },
+        {
+          "type": "duplicate_subscription",
+          "category": "streaming",
+          "amount": 23.98,
+          "monthly_impact": 9.99,
+          "confidence": 0.9,
+          "provisional": false
+        },
+        {
+          "type": "price_increase",
+          "payee": [
+            "Vattenfall"
+          ],
+          "previous_amount": 78.0,
+          "amount": 94.0,
+          "monthly_impact": 16.0,
+          "confidence": 0.9
+        },
+        {
+          "type": "unknown_debit",
+          "payee": [
+            "XYZ Digital",
+            "XYZ Digital GmbH"
+          ],
+          "amount": 29.9,
+          "confidence": 0.9
+        },
+        {
+          "type": "irregular_large_debit",
+          "payee": [
+            "HUK-COBURG",
+            "HUK-Coburg"
+          ],
+          "category": "insurance",
+          "amount": 65.4,
+          "rhythm": "yearly",
+          "next_due_date": "2027-09-20",
+          "monthly_impact": 5.45,
+          "confidence": 0.6,
+          "provisional": true
+        },
+        {
+          "type": "irregular_large_debit",
+          "payee": [
+            "Beitragsservice",
+            "ARD ZDF Beitragsservice",
+            "ARD ZDF Deutschlandradio Beitragsservice"
+          ],
+          "category": "broadcasting_fee",
+          "amount": 55.08,
+          "rhythm": "quarterly",
+          "next_due_date": "2026-11-15",
+          "monthly_impact": 18.36,
+          "confidence": 0.6,
+          "provisional": true
+        }
+      ],
+      "must_not_appear": [
+        "REWE, Lidl, dm, Lieferando as recurring_payment (variable spending)",
+        "any spending_increase (groceries are 157.65 every month)"
+      ]
+    },
+    "DE11****0011": {
+      "source": "Test A, English layout (1 month)",
+      "counts": {
+        "regular_income": 1,
+        "recurring_payment": 4,
+        "duplicate_subscription": 0,
+        "price_increase": 0,
+        "unknown_debit": 0,
+        "irregular_large_debit": 1,
+        "spending_increase": 0
+      },
+      "signals": [
+        {
+          "type": "regular_income",
+          "payee": [
+            "Example Software"
+          ],
+          "amount": 3100.0,
+          "confidence": 0.6,
+          "provisional": true
+        },
+        {
+          "type": "recurring_payment",
+          "payee": [
+            "Wohnbau Nord"
+          ],
+          "category": "rent",
+          "confidence": 0.6,
+          "provisional": true
+        },
+        {
+          "type": "recurring_payment",
+          "payee": [
+            "Stadtwerke Hannover",
+            "Stadtwerke",
+            "enercity"
+          ],
+          "category": "energy",
+          "confidence": 0.6,
+          "provisional": true
+        },
+        {
+          "type": "recurring_payment",
+          "payee": [
+            "Vodafone"
+          ],
+          "category": "telecom",
+          "confidence": 0.6,
+          "provisional": true
+        },
+        {
+          "type": "recurring_payment",
+          "payee": [
+            "Apple",
+            "Apple Services",
+            "iCloud"
+          ],
+          "category": "apps",
+          "confidence": 0.6,
+          "provisional": true
+        },
+        {
+          "type": "irregular_large_debit",
+          "payee": [
+            "Lufthansa"
+          ],
+          "category": "travel",
+          "amount": 312.4,
+          "rhythm": "one_off",
+          "confidence": 0.6,
+          "provisional": true
+        }
+      ],
+      "must_not_appear": [
+        "unknown_debit or spending_increase (only one month of data)"
+      ]
+    },
+    "DE22****4422": {
+      "source": "Test B, reversals and duplicates (1 month)",
+      "counts": {
+        "regular_income": 1,
+        "recurring_payment": 3,
+        "duplicate_subscription": 0,
+        "price_increase": 0,
+        "unknown_debit": 0,
+        "irregular_large_debit": 0,
+        "spending_increase": 0
+      },
+      "signals": [
+        {
+          "type": "regular_income",
+          "payee": [
+            "Muster Technologies"
+          ],
+          "amount": 2450.0,
+          "confidence": 0.6,
+          "provisional": true
+        },
+        {
+          "type": "recurring_payment",
+          "payee": [
+            "Vattenfall"
+          ],
+          "category": "energy",
+          "confidence": 0.6,
+          "provisional": true
+        },
+        {
+          "type": "recurring_payment",
+          "payee": [
+            "Netflix"
+          ],
+          "category": "streaming",
+          "confidence": 0.6,
+          "provisional": true
+        },
+        {
+          "type": "recurring_payment",
+          "payee": [
+            "FitX"
+          ],
+          "category": "fitness",
+          "confidence": 0.6,
+          "provisional": true
+        }
+      ],
+      "must_not_appear": [
+        "Amazon in any signal (refunded, shopping)",
+        "FitX reversal counted as a payment"
+      ]
+    }
+  }
+}
