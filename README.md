@@ -4,9 +4,9 @@
 
 FinAssist is an AI money assistant for people in Germany. It reads your bank statements and the money-related emails you receive, tells you what needs your attention, and helps you act on it with clear options, a ready-to-send German email and verified links. It never moves money.
 
-> 📱 **Try the app:** [finassistapp.lovable.app](https://finassistapp.lovable.app) (made-up demo data, pick a person to start) · 🎬 **Demo video:** _coming soon_
+> 📱 **Try the app:** [finassistapp.lovable.app](https://finassistapp.lovable.app) (made-up demo data, pick a person to start).
 
-| Choose a person | What needs you | Options and a German draft | Your month at a glance |
+| Choose a person | What needs you | Options and next steps | Your month at a glance |
 |:---:|:---:|:---:|:---:|
 | <img src="docs/screenshots/1_welcome.png" width="200" alt="Welcome screen with four demo people"> | <img src="docs/screenshots/4_attention.png" width="200" alt="Attention tab with a price rise and a payment due"> | <img src="docs/screenshots/5_card_detail.png" width="200" alt="Card detail with options and a German email draft"> | <img src="docs/screenshots/6_my_finances.png" width="200" alt="My Finances tab with regular payments and income"> |
 
