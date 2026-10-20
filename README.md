@@ -6,9 +6,9 @@ FinAssist is an AI money assistant for people in Germany. It reads your bank sta
 
 > 📱 **Try the app:** [finassistapp.lovable.app](https://finassistapp.lovable.app) (made-up demo data, pick a person to start).
 
-| Choose a person | Attention Tab | Options and next steps | Your month at a glance |
+| Choose a person | Attention tab | Options and next steps | Your month at a glance |
 |:---:|:---:|:---:|:---:|
-| <img src="docs/screenshots/1_welcome.png" width="200" alt="Welcome screen with four demo people"> | <img src="docs/screenshots/4_attention.png" width="200" alt="Attention tab with a price rise and a payment due"> | <img src="docs/screenshots/5_card_detail.png" width="200" alt="Card detail with options and a German email draft"> | <img src="docs/screenshots/6_my_finances.png" width="200" alt="My Finances tab with regular payments and income"> |
+| <img src="docs/screenshots/1_welcome.png" width="200" alt="Welcome screen with four demo people"> | <img src="docs/screenshots/4_attention.png" width="200" alt="Attention tab with a price rise and a payment due"> | <img src="docs/screenshots/5_card_detail.png" width="200" alt="Card detail with options, useful links and mark as done"> | <img src="docs/screenshots/6_my_finances.png" width="200" alt="My Finances tab with regular payments and income"> |
 
 More screens: [connect data (simulated)](docs/screenshots/2_connect_data.png) · [all set](docs/screenshots/3_all_set.png)
 
